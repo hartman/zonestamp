@@ -1,0 +1,48 @@
+.time-wrapper {
+  input {
+    background: none;
+    color: #fff;
+    font-size: 2rem;
+    opacity: 0.8;
+    font-weight: bold;
+    border: none;
+    text-decoration: underline;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+  }
+  p {
+    text-align: center;
+    margin: 0;
+  }
+}
+
+button {
+  color: #0896b9;
+  box-shadow: none;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  font-family: 'Lobster', cursive;
+  margin: 2rem 1rem 0;
+}
+
+.stamp-link-wrapper a {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  padding: 0.5rem;
+}
+
+.timezone-picker.no-border {
+  input {
+    border: none;
+    cursor: pointer;
+  }
+  ul {
+    background-color: #0896b9;
+  }
+}

@@ -1,0 +1,17 @@
+footer {
+  padding: 1rem;
+  .cta {
+    display: flex;
+    justify-content: space-between;
+    a {
+      color: #fff;
+    }
+    .github {
+      margin-left: 5px;
+      img {
+        width: 20px;
+        margin-bottom: -4px;
+      }
+    }
+  }
+}

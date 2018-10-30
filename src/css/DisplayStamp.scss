@@ -1,0 +1,23 @@
+.subhead {
+}
+
+.time-hour {
+  font-size: 120px;
+  opacity: 0.8;
+  font-weight: bold;
+}
+
+.time-day {
+  font-size: 2rem;
+  opacity: 0.8;
+  margin: 1rem;
+}
+
+.display.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid rgba(255, 255, 255, 0.8);
+  margin: 0.5rem auto 0;
+}

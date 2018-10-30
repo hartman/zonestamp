@@ -1,0 +1,27 @@
+.timezone-picker.jsx-693531783 {
+  min-width: 250px;
+  font-size: 1rem;
+  font-family: 'Quicksand', sans-serif;
+  input {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
+    &::placeholder {
+      color: #fff;
+    }
+  }
+  ul {
+    li {
+      button {
+        background-color: #0896b9;
+        color: #fff;
+        &.focus {
+          background-color: #fff;
+          color: #0896b9;
+        }
+      }
+    }
+  }
+}
