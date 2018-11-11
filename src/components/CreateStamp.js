@@ -4,10 +4,11 @@ import TimezonePicker from 'react-timezone';
 import Moment from 'react-moment';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/CreateStamp.scss';
+import '../css/DatepickerPortal.scss';
 
 class CreateStamp extends Component {
   state = {
@@ -15,6 +16,15 @@ class CreateStamp extends Component {
     startDate: moment()
   };
   render() {
+    function showZonestampLink() {
+      let button = document.getElementById('stamp-link-wrapper');
+      //button.style.display = button.style.display === 'none' ? 'block' : 'none';
+      if (button.style.display === 'none') {
+        button.style.display = 'block';
+      } else {
+        button.style.display = 'none';
+      }
+    }
     return (
       <App
         main={
@@ -28,6 +38,7 @@ class CreateStamp extends Component {
                     this.setState({ startDate: date.tz(this.state.zone) });
                   }}
                   dateFormat="MMMM DD, YYYY"
+                  withPortal
                 />
               </div>
               <p>at</p>
@@ -43,6 +54,7 @@ class CreateStamp extends Component {
                   dateFormat="LT"
                   timeCaption="Time"
                   className="inline"
+                  withPortal
                 />
               </div>
             </div>
@@ -58,11 +70,11 @@ class CreateStamp extends Component {
                 name: 'timezone'
               }}
             />
-            <button>Generate Stamp!</button>
-            <div className="stamp-link-wrapper">
+            <button onClick={showZonestampLink}>Generate Stamp!</button>
+            <div id="stamp-link-wrapper" style={{ display: 'none' }}>
               <div className="arrow-up" />
               <div className="stamp-link">
-                <Link to={"/" + this.state.startDate.unix()}>
+                <Link to={'/' + this.state.startDate.unix()}>
                   https://zonestamp.com/
                   {this.state.startDate.unix()}
                 </Link>

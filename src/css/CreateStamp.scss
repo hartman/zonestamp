@@ -29,12 +29,14 @@ button {
   margin: 2rem 1rem 0;
 }
 
-.stamp-link-wrapper a {
-  color: #fff;
-  text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 3px;
-  padding: 0.5rem;
+#stamp-link-wrapper {
+  a {
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    padding: 0.5rem;
+  }
 }
 
 .timezone-picker.no-border {

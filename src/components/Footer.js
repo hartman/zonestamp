@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import github from '../images/github.svg';
 
 class Footer extends Component {
@@ -13,7 +14,7 @@ class Footer extends Component {
               <img alt="github logo" src={github} />
             </a>
           </div>
-          <a href="/">Make your own zoneStamp!</a>
+          <Link to="/?utm_source=zonestamp&utm_medium=footer&utm_campaign=create_link">Make your own zoneStamp!</Link>
         </div>
       </footer>
     );
