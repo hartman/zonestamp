@@ -1,5 +1,6 @@
 {
   "name": "zonesnap",
+  "homepage": "https://zonestamp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,7 +27,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "hmoepage": "https://zonestamp.com",
   "browserslist": [
     ">0.2%",
     "not dead",
