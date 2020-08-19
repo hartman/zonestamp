@@ -9,6 +9,7 @@ import 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/CreateStamp.scss';
 import '../css/DatepickerPortal.scss';
+import '../css/timezone-picker.scss';
 
 class CreateStamp extends Component {
   state = {
