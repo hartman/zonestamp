@@ -70,7 +70,10 @@ class CreateStamp extends Component {
                 name: 'timezone'
               }}
             />
-            <button onClick={showZonestampLink}>Generate Stamp!</button>
+            <button
+              className="stamp-generate"
+              onClick={showZonestampLink}>Generate Stamp!
+            </button>
             <div id="stamp-link-wrapper" style={{ display: 'none' }}>
               <div className="arrow-up" />
               <div className="stamp-link">
