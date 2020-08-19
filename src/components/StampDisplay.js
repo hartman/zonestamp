@@ -4,6 +4,7 @@ import TimezonePicker from 'react-timezone';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import '../css/DisplayStamp.scss';
+import '../css/timezone-picker.scss';
 
 class StampDisplay extends Component {
   state = {
