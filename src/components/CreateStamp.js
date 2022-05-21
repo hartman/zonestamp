@@ -34,7 +34,7 @@ class CreateStamp extends Component {
                 <DatePicker
                   selected={this.state.startDate}
                   onChange={date => {
-                    this.setState({ startDate: date.tz(this.state.zone) });
+                    this.setState({ startDate: date.tz(this.state.zone.name) });
                   }}
                   dateFormat="MMMM DD, YYYY"
                   withPortal
@@ -45,7 +45,7 @@ class CreateStamp extends Component {
                 <DatePicker
                   selected={this.state.startDate}
                   onChange={date => {
-                    this.setState({ startDate: date.tz(this.state.zone) });
+                    this.setState({ startDate: date.tz(this.state.zone.name) });
                   }}
                   showTimeSelect
                   showTimeSelectOnly
