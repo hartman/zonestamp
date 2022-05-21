@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import App from './App';
-import TimezonePicker from 'react-timezone';
-import Moment from 'react-moment';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import DatePicker from 'react-datepicker';
+import TimezoneSelect from 'react-timezone-select'
 import { Link } from 'react-router-dom';
-import 'moment-timezone';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/CreateStamp.scss';
 import '../css/DatepickerPortal.scss';
@@ -59,18 +57,16 @@ class CreateStamp extends Component {
                 />
               </div>
             </div>
-            <TimezonePicker
-              className="timezone-picker no-border"
-              value={this.state.zone}
+	    <TimezoneSelect
+	      className="timezone-picker"
+	      classNamePrefix="timezone-picker-select"
+	      value={this.state.zone}
               onChange={timezone => {
-                let newStartDate = this.state.startDate.tz(this.state.zone);
-                this.setState({ startDate: newStartDate, zone: timezone });
+                this.state.startDate.tz(this.state.zone.name);
+
+                this.setState({ startDate: this.state.startDate, zone: timezone });
               }}
-              inputProps={{
-                placeholder: 'Select Timezone...',
-                name: 'timezone'
-              }}
-            />
+	    />
             <button
               className="stamp-generate"
               onClick={showZonestampLink}>Generate Stamp!

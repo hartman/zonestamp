@@ -2,7 +2,8 @@
   min-width: 250px;
   font-size: 1rem;
   font-family: 'Quicksand', sans-serif;
-  input {
+
+  .timezone-picker-select__control {
     background: none;
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 3px;
@@ -12,16 +13,17 @@
       color: #fff;
     }
   }
-  ul {
-    li {
-      button {
-        background-color: #0896b9;
-        color: #fff;
-        &.focus {
-          background-color: #fff;
-          color: #0896b9;
-        }
-      }
-    }
+  .timezone-picker-select__single-value,
+  .timezone-picker-select__input-container {
+    color: #fff;
+  }
+  .timezone-picker-select__menu {
+    background-color: #0896b9;
+    color: #fff;
+  }
+  .timezone-picker-select__option--is-focused,
+  .timezone-picker-select__option--is-selected {
+    background-color: #fff;
+    color: #0896b9;
   }
 }

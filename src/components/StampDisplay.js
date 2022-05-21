@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import App from './App';
-import TimezonePicker from 'react-timezone';
+import TimezoneSelect from 'react-timezone-select'
 import Moment from 'react-moment';
+import moment from 'moment-timezone';
 import 'moment-timezone';
 import '../css/DisplayStamp.scss';
 import '../css/timezone-picker.scss';
@@ -18,25 +19,22 @@ class StampDisplay extends Component {
           <Fragment>
             <p className="subhead">That's...</p>
             <div className="time-hour">
-              <Moment tz={this.state.zone} format="h:mm a" unix>
+              <Moment tz={this.state.zone.name} format="h:mm a" unix>
                 {this.state.date}
               </Moment>
             </div>
             <div className="time-day">
-              <Moment tz={this.state.zone} format="dddd, MMMM Do YYYY" unix>
+              <Moment tz={this.state.zone.name} format="dddd, MMMM Do YYYY" unix>
                 {this.state.date}
               </Moment>
             </div>
             <div className="arrow-up display" />
-            <TimezonePicker
+            <TimezoneSelect
               className="timezone-picker"
+	      classNamePrefix="timezone-picker-select"
               value={this.state.zone}
               onChange={timezone => {
                 this.setState({ zone: timezone });
-              }}
-              inputProps={{
-                placeholder: 'Select Timezone...',
-                name: 'timezone'
               }}
             />
           </Fragment>
