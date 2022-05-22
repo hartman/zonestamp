@@ -1,3 +1,7 @@
+main p {
+  text-align: center;
+  margin: 0;
+}
 .time-wrapper {
   input {
     background: none;
@@ -10,10 +14,8 @@
     padding: 1rem;
     text-align: center;
     cursor: pointer;
-  }
-  p {
-    text-align: center;
-    margin: 0;
+    max-width: 100%;
+    width: 100%;
   }
 }
 

@@ -2,12 +2,14 @@
 }
 
 .time-hour {
-  font-size: 120px;
+  text-align: center;
+  font-size: 60px;
   opacity: 0.8;
   font-weight: bold;
 }
 
 .time-day {
+  text-align: center;
   font-size: 2rem;
   opacity: 0.8;
   margin: 1rem;
@@ -20,4 +22,8 @@
   border-right: 15px solid transparent;
   border-bottom: 15px solid rgba(255, 255, 255, 0.8);
   margin: 0.5rem auto 0;
+}
+
+@media screen and (min-width: 720px) {
+  font-size: 120px;
 }
