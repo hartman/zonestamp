@@ -21,23 +21,29 @@ class StampDisplay extends Component {
             <p className="subhead">That's...</p>
             <div className="time-hour">
               <Moment tz={this.state.zoneName} format="h:mm a" unix>
-		{this.state.date}
-	      </Moment>
+                {this.state.date}
+              </Moment>
             </div>
             <div className="time-day">
               <Moment tz={this.state.zoneName} format="dddd, MMMM Do YYYY" unix>
-		{this.state.date}
-	      </Moment>
+                {this.state.date}
+              </Moment>
             </div>
             <div className="arrow-up display" />
             <TimezoneSelect
               className="timezone-picker"
-	      classNamePrefix="timezone-picker-select"
+              classNamePrefix="timezone-picker-select"
               value={this.state.zone}
               onChange={timezone => {
                 this.setState({ zone: timezone, zoneName: timezone.value });
               }}
             />
+            <div className="time-utc">
+              <p>or</p>
+              <Moment tz="UTC" format="DD-MM-YYYY hh:mm z" unix>
+                  {this.state.date}
+              </Moment>
+            </div>
           </Fragment>
         }
       />
