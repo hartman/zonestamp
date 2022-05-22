@@ -12,10 +12,10 @@ class StampDisplay extends Component {
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     date: parseInt( window.location.pathname.substr(1), 10 ),
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    format: 'LT'
+    format: moment.localeData().longDateFormat('LT')
   };
   changeFormat = () => {
-    if (this.state.format === 'h:mm a') {
+    if (this.state.format === 'h:mm a' || this.state.format === 'h:mm A') {
       this.setState({ format: 'HH:mm' });
     } else {
       this.setState({ format: 'h:mm a' });
