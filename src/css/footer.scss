@@ -2,9 +2,11 @@ footer {
   padding: 1rem;
   .cta {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     a {
       color: #fff;
+      margin-top: 1rem;
     }
     .github {
       margin-left: 5px;
@@ -13,5 +15,11 @@ footer {
         margin-bottom: -4px;
       }
     }
+  }
+}
+
+@media screen and (min-width: 700px) {
+  footer .cta {
+    flex-direction: row
   }
 }
