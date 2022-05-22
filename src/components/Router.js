@@ -5,7 +5,7 @@ import StampDisplay from './StampDisplay';
 import NotFound from './NotFound';
 
 const Router = () => (
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <BrowserRouter>
     <Switch>
       <Route exact path="/" component={CreateStamp} />
       <Route path="/(\d{10})" component={StampDisplay} />
