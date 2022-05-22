@@ -9,8 +9,9 @@ import '../css/timezone-picker.scss';
 
 class StampDisplay extends Component {
   state = {
-    zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    date: window.location.pathname.substr(1)
+    zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    date: parseInt( window.location.pathname.substr(1), 10 ),
+    zone: Intl.DateTimeFormat().resolvedOptions().timeZone
   };
   render() {
     return (
@@ -19,14 +20,14 @@ class StampDisplay extends Component {
           <Fragment>
             <p className="subhead">That's...</p>
             <div className="time-hour">
-              <Moment tz={this.state.zone.name} format="h:mm a" unix>
-                {this.state.date}
-              </Moment>
+              <Moment tz={this.state.zoneName} format="h:mm a" unix>
+		{this.state.date}
+	      </Moment>
             </div>
             <div className="time-day">
-              <Moment tz={this.state.zone.name} format="dddd, MMMM Do YYYY" unix>
-                {this.state.date}
-              </Moment>
+              <Moment tz={this.state.zoneName} format="dddd, MMMM Do YYYY" unix>
+		{this.state.date}
+	      </Moment>
             </div>
             <div className="arrow-up display" />
             <TimezoneSelect
@@ -34,7 +35,7 @@ class StampDisplay extends Component {
 	      classNamePrefix="timezone-picker-select"
               value={this.state.zone}
               onChange={timezone => {
-                this.setState({ zone: timezone });
+                this.setState({ zone: timezone, zoneName: timezone.value });
               }}
             />
           </Fragment>
