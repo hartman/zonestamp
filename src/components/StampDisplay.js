@@ -54,7 +54,7 @@ class StampDisplay extends Component {
             />
             <div className="time-utc">
               <p>or</p>
-              <Moment tz="UTC" format="DD-MM-YYYY hh:mm z" unix>
+              <Moment tz="UTC" format="YYYY-MM-DD HH:mm z" unix>
                   {this.state.date}
               </Moment>
             </div>
