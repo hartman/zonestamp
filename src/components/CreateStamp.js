@@ -12,6 +12,7 @@ import '../css/timezone-picker.scss';
 class CreateStamp extends Component {
   state = {
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     startDate: moment()
   };
   render() {
@@ -34,7 +35,7 @@ class CreateStamp extends Component {
                 <DatePicker
                   selected={this.state.startDate}
                   onChange={date => {
-                    this.setState({ startDate: date.tz(this.state.zone.name) });
+                    this.setState({ startDate: date.tz(this.state.zoneName) });
                   }}
                   dateFormat="MMMM DD, YYYY"
                   withPortal
@@ -45,7 +46,7 @@ class CreateStamp extends Component {
                 <DatePicker
                   selected={this.state.startDate}
                   onChange={date => {
-                    this.setState({ startDate: date.tz(this.state.zone.name) });
+                    this.setState({ startDate: date.tz(this.state.zoneName) });
                   }}
                   showTimeSelect
                   showTimeSelectOnly
@@ -57,16 +58,19 @@ class CreateStamp extends Component {
                 />
               </div>
             </div>
-	    <TimezoneSelect
-	      className="timezone-picker"
-	      classNamePrefix="timezone-picker-select"
-	      value={this.state.zone}
+            <TimezoneSelect
+              className="timezone-picker"
+              classNamePrefix="timezone-picker-select"
+              value={this.state.zone}
               onChange={timezone => {
-                this.state.startDate.tz(this.state.zone.name);
-
-                this.setState({ startDate: this.state.startDate, zone: timezone });
+                let newStartDate = this.state.startDate.tz(timezone.value, true);
+                this.setState({
+                  startDate: newStartDate,
+                  zone: timezone,
+                  zoneName: timezone.value
+                });
               }}
-	    />
+            />
             <button
               className="stamp-generate"
               onClick={showZonestampLink}>Generate Stamp!
