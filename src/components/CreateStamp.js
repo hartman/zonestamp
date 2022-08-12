@@ -79,7 +79,7 @@ class CreateStamp extends Component {
               <div className="arrow-up" />
               <div className="stamp-link">
                 <Link to={'/' + this.state.startDate.unix()}>
-                  {"https://" + window.location.host}/
+                  {window.location.protocol + "//" + window.location.host}/
                   {this.state.startDate.unix()}
                 </Link>
               </div>
