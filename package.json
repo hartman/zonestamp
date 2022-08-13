@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "add-to-calendar-button": "^1.14.3",
     "gh-pages": "^2.0.1",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
