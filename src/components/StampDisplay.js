@@ -3,17 +3,50 @@ import App from './App';
 import TimezoneSelect from 'react-timezone-select'
 import Moment from 'react-moment';
 import moment from 'moment-timezone';
+import { atcb_init } from 'add-to-calendar-button';
 import 'moment-timezone';
 import '../css/DisplayStamp.scss';
 import '../css/timezone-picker.scss';
+import 'add-to-calendar-button/assets/css/atcb.css';
+
+const params = new URLSearchParams(window.location.search);
+const datestamp = parseInt( window.location.pathname.substr(1), 10 );
 
 class StampDisplay extends Component {
   state = {
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    date: parseInt( window.location.pathname.substr(1), 10 ),
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    format: moment.localeData().longDateFormat('LT')
+    format: moment.localeData().longDateFormat('LT'),
+    date: datestamp,
+    enddate: params.has('enddate') ? parseInt( params.get('enddate'), 10 ) : datestamp + 3600,
+    name: params.get('name') || null,
+    description: params.get('description') || null,
+    location: params.get('location') || null,
+
   };
+  atcbConfig = {
+    name: this.state.name,
+    description: this.state.description,
+    startDate: moment.unix(this.state.date).format('YYYY-MM-DD'),
+    endDate: moment.unix(this.state.enddate).format('YYYY-MM-DD'),
+    startTime: moment.unix(this.state.date).format('HH:mm'),
+    endTime: moment.unix(this.state.enddate).format('HH:mm'),
+    location: this.state.location,
+    options: [
+      'iCal',
+      'Google',
+      'Apple',
+      'Microsoft365',
+      'MicrosoftTeams',
+      'Outlook.com',
+      'Yahoo',
+    ],
+  };
+  componentDidMount() {
+    if ( this.atcbConfig.name ) {
+      atcb_init();
+    }
+  }
   changeFormat = () => {
     if (this.state.format === 'h:mm a' || this.state.format === 'h:mm A') {
       this.setState({ format: 'HH:mm' });
@@ -57,6 +90,9 @@ class StampDisplay extends Component {
               <Moment tz="UTC" format="YYYY-MM-DD HH:mm z" unix>
                   {this.state.date}
               </Moment>
+            </div>
+            <div className="atcb">
+              {JSON.stringify(this.atcbConfig, null, 4)}
             </div>
           </Fragment>
         }
