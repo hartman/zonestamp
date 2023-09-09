@@ -7,9 +7,15 @@ import NotFound from './NotFound';
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={CreateStamp} />
-      <Route path="/(\d{10})" component={StampDisplay} />
-      <Route component={NotFound} />
+      <Route exact path="/">
+	<CreateStamp />
+      </Route>
+      <Route path="/(\d{10})">
+	<StampDisplay />
+      </Route>
+      <Route>
+	<NotFound />
+      </Route>
     </Switch>
   </BrowserRouter>
 );
