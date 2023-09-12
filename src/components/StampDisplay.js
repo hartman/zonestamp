@@ -85,7 +85,7 @@ class StampDisplay extends Component {
             <button
               className="change-format"
               value={this.state.format}
-              onClick={this.changeFormat}>24/12
+              onClick={this.changeFormat}>24h / 12h
             </button>
             <div className="time-day">
               <Moment tz={this.state.zoneName} format="dddd, MMMM Do YYYY" unix>
