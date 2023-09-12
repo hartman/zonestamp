@@ -41,6 +41,10 @@
   margin: 0.2rem 0.2rem 0;
 }
 
+.atcb-button.atcb-button {
+  z-index: 0;
+}
+
 @media screen and (min-width: 720px) {
   font-size: 120px;
 }

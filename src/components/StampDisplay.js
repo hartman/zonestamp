@@ -25,26 +25,42 @@ class StampDisplay extends Component {
 
   };
   atcbConfig = {
-    name: this.state.name,
+    name: this.state.name ?? 'Calendar event',
     description: this.state.description,
     startDate: moment.unix(this.state.date).format('YYYY-MM-DD'),
     endDate: moment.unix(this.state.enddate).format('YYYY-MM-DD'),
     startTime: moment.unix(this.state.date).format('HH:mm'),
     endTime: moment.unix(this.state.enddate).format('HH:mm'),
+    timeZone: 'GMT',
     location: this.state.location,
     options: [
       'iCal',
       'Google',
       'Apple',
-      'Microsoft365',
       'MicrosoftTeams',
       'Outlook.com',
-      'Yahoo',
     ],
+    hideCheckmark: true,
+    buttonStyle: 'round',
   };
   componentDidMount() {
     if ( this.atcbConfig.name ) {
-      atcb_init();
+      try {
+        atcb_init();
+      } catch ( e ) {
+        console.log( e );
+        console.log( this.atcbConfig );
+      }
+    }
+  }
+  componentDidUpdate() {
+    if ( this.atcbConfig.name ) {
+      try {
+        atcb_init();
+      } catch ( e ) {
+        console.log( e );
+        console.log( this.atcbConfig );
+      }
     }
   }
   changeFormat = () => {
