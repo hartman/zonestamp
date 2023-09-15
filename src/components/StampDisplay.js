@@ -9,59 +9,56 @@ import '../css/DisplayStamp.scss';
 import '../css/timezone-picker.scss';
 import 'add-to-calendar-button/assets/css/atcb.css';
 
-const params = new URLSearchParams(window.location.search);
-const datestamp = parseInt( window.location.pathname.substr(1), 10 );
-
 class StampDisplay extends Component {
   state = {
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     format: moment.localeData().longDateFormat('LT'),
-    date: datestamp,
-    enddate: params.has('enddate') ? parseInt( params.get('enddate'), 10 ) : datestamp + 3600,
-    name: params.get('name') || null,
-    description: params.get('description') || null,
-    location: params.get('location') || null,
-
-  };
-  atcbConfig = {
-    name: this.state.name ?? 'Calendar event',
-    description: this.state.description,
-    startDate: moment.unix(this.state.date).format('YYYY-MM-DD'),
-    endDate: moment.unix(this.state.enddate).format('YYYY-MM-DD'),
-    startTime: moment.unix(this.state.date).format('HH:mm'),
-    endTime: moment.unix(this.state.enddate).format('HH:mm'),
-    timeZone: 'GMT',
-    location: this.state.location,
-    options: [
-      'iCal',
-      'Google',
-      'Apple',
-      'MicrosoftTeams',
-      'Outlook.com',
-    ],
-    hideCheckmark: true,
-    buttonStyle: 'round',
+    date: 0,
   };
   componentDidMount() {
-    if ( this.atcbConfig.name ) {
+    this.initStateFromUrl();
+  }
+  componentDidUpdate() {
+    if ( this.state.date > 0 ) {
       try {
         atcb_init();
       } catch ( e ) {
         console.log( e );
-        console.log( this.atcbConfig );
+        console.log( this.state.atcbConfig );
       }
     }
   }
-  componentDidUpdate() {
-    if ( this.atcbConfig.name ) {
-      try {
-        atcb_init();
-      } catch ( e ) {
-        console.log( e );
-        console.log( this.atcbConfig );
-      }
-    }
+  initStateFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const datestamp = parseInt( window.location.pathname.substr(1), 10 );
+    const endDatestamp = params.has('enddate') ? parseInt( params.get('enddate'), 10 ) : datestamp + 3600;
+
+    const atcbConfig = {
+      name: params.get('name') || 'Calendar event',
+      description: params.get('description') || null,
+      startDate: moment.unix(datestamp).format('YYYY-MM-DD'),
+      endDate: moment.unix(datestamp).format('YYYY-MM-DD'),
+      startTime: moment.unix(endDatestamp).format('HH:mm'),
+      endTime: moment.unix(endDatestamp).format('HH:mm'),
+      timeZone: 'GMT',
+      location: params.get('location') || null,
+      options: [
+        'iCal',
+        'Google',
+        'Apple',
+        'MicrosoftTeams',
+        'Outlook.com',
+      ],
+      hideCheckmark: true,
+      buttonStyle: 'round',
+    };
+
+    this.setState({
+      date: datestamp,
+      enddate: endDatestamp,
+      atcbConfig: atcbConfig
+    });
   }
   changeFormat = () => {
     if (this.state.format === 'h:mm a' || this.state.format === 'h:mm A') {
@@ -107,8 +104,8 @@ class StampDisplay extends Component {
                   {this.state.date}
               </Moment>
             </div>
-            <div className="atcb">
-              {JSON.stringify(this.atcbConfig, null, 4)}
+            <div className="atcb" >
+              {this.state.date && JSON.stringify(this.state.atcbConfig, null, 4)}
             </div>
           </Fragment>
         }
