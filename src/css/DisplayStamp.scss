@@ -38,7 +38,14 @@
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 1px;
   font-family: 'Lobster', cursive;
-  margin: 0.2rem 0.2rem 0;
+  margin: 0;
+  position: absolute;
+  top: -1.5rem;
+  right: 0;
+}
+
+.atcb-button.atcb-button {
+  z-index: 0;
 }
 
 @media screen and (min-width: 720px) {

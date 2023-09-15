@@ -13,7 +13,7 @@ class CreateStamp extends Component {
   state = {
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    startDate: moment()
+    startDate: moment().startOf('minute')
   };
   render() {
     function showZonestampLink() {
