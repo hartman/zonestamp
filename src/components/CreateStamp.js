@@ -25,6 +25,14 @@ class CreateStamp extends Component {
         button.style.display = 'none';
       }
     }
+    // Style to improve contrast of dropdown indicator and "no options" message
+    const style = {
+      dropdownIndicator: (base, state) => ({
+        ...base,
+        color: state.isFocused ? 'white' : 'silver'
+      }),
+      noOptionsMessage: (base) => ({ ...base, color: 'white' })
+    };
     return (
       <App
         main={
@@ -62,6 +70,7 @@ class CreateStamp extends Component {
               className="timezone-picker"
               classNamePrefix="timezone-picker-select"
               value={this.state.zone}
+              styles={style}
               onChange={timezone => {
                 let newStartDate = this.state.startDate.tz(timezone.value, true);
                 this.setState({
