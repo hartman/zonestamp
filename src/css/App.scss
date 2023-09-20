@@ -3,9 +3,9 @@
 }
 
 body {
-  background-color: #0c7fa2;
-  font-family: 'Quicksand', sans-serif;
-  color: #fff;
+  background-color: var(--primary-background-color);
+  font-family: var(--primary-font-family);
+  color: var(--primary-text-color);
 }
 
 .App {
@@ -26,10 +26,10 @@ body {
 }
 
 .title {
-  font-family: 'Lobster', cursive;
+  font-family: var(--decorative-font-family);
   font-size: 1.5rem;
   a {
-    color: #fff;
+    color: var(--primary-link-color);
     text-decoration: none;
   }
 }
@@ -42,24 +42,6 @@ main {
   align-content: center;
   align-items: center;
   position: relative;
-}
-
-.arrow-up {
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid rgba(255, 255, 255, 0.8);
-  margin: 0.5rem auto;
-}
-
-.change-zone {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.5rem;
-  color: #ffa500;
-  margin: 0 1rem 1rem;
-  font-family: 'Lobster', cursive;
-  letter-spacing: 1px;
 }
 
 .attribution {

@@ -1,3 +1,30 @@
+:root {
+  --primary-teal-color: #0c7fa2;
+  --primary-white-color: #fff;
+  --muted-white-color: rgba(255, 255, 255, 0.85);
+
+  --primary-font-family: 'Quicksand', sans-serif;
+  --decorative-font-family: 'Lobster', cursive;
+
+  --primary-background-color: var(--primary-teal-color);
+  --primary-text-color: var(--primary-white-color);
+  --primary-link-color: var(--primary-white-color);
+  --primary-border-color: var(--muted-white-color);
+  --inverted-background-color: var(--primary-white-color);
+  --inverted-text-color: var(--primary-teal-color);
+
+  --primary-button-background-color: var(--muted-white-color);
+  --primary-button-text-color: var(--primary-teal-color);
+  --primary-button-border-radius: 3px;
+  --primary-button-font-family: var(--decorative-font-family);
+  --focused-primary-button-background-color: var(--primary-white-color);
+
+  --secondary-button-background-color: var(--primary-teal-color);
+  --secondary-button-text-color: var(--muted-white-color);
+  --secondary-button-border-color: var(--primary-border-color);
+  --secondary-button-border-radius: 3px;
+}
+
 body {
   margin: 0;
   padding: 0;

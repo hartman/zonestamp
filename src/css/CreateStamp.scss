@@ -2,10 +2,11 @@ main p {
   text-align: center;
   margin: 0;
 }
+
 .time-wrapper {
   input {
     background: none;
-    color: #fff;
+    color: var(--primary-text-color);
     font-size: 2rem;
     opacity: 0.8;
     font-weight: bold;
@@ -20,33 +21,38 @@ main p {
 }
 
 .stamp-generate {
-  color: #0896b9;
+  color: var(--primary-button-text-color);
+  cursor: pointer;
   box-shadow: none;
   font-size: 1.5rem;
   padding: 1rem;
   border: none;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 3px;
-  font-family: 'Lobster', cursive;
+  background-color: var(--primary-button-background-color);
+  border-radius: var(--primary-button-border-radius);
+  font-family: var(--decorative-font-family);
   margin: 2rem 1rem 0;
+
+  &:focus,
+  &:hover {
+    background-color: var(--focused-primary-button-background-color);
+  }
 }
 
-#stamp-link-wrapper {
+.stamp-link-wrapper {
   a {
-    color: #fff;
+    color: var(--secondary-button-text-color);
     text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 3px;
+    border: 1px solid var(--secondary-button-border-color);
+    border-radius: var(--secondary-button-border-radius);
     padding: 0.5rem;
   }
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid var(--secondary-button-border-color);
+    margin: 0.5rem auto;
+  }
 }
 
-.timezone-picker.no-border {
-  input {
-    border: none;
-    cursor: pointer;
-  }
-  ul {
-    background-color: #0896b9;
-  }
-}

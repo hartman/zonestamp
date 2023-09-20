@@ -13,18 +13,13 @@ class CreateStamp extends Component {
   state = {
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    startDate: moment().startOf('minute')
+    startDate: moment().startOf('minute'),
+    stamplinkVisible: false
   };
+  showZonestampLink = () => {
+    this.setState({ stamplinkVisible: !this.state.stamplinkVisible });
+  }
   render() {
-    function showZonestampLink() {
-      let button = document.getElementById('stamp-link-wrapper');
-      //button.style.display = button.style.display === 'none' ? 'block' : 'none';
-      if (button.style.display === 'none') {
-        button.style.display = 'block';
-      } else {
-        button.style.display = 'none';
-      }
-    }
     // Style to improve contrast of dropdown indicator and "no options" message
     const style = {
       dropdownIndicator: (base, state) => ({
@@ -82,9 +77,10 @@ class CreateStamp extends Component {
             />
             <button
               className="stamp-generate"
-              onClick={showZonestampLink}>Generate Stamp!
+              onClick={this.showZonestampLink}>Generate Stamp!
             </button>
-            <div id="stamp-link-wrapper" style={{ display: 'none' }}>
+            { this.state.stamplinkVisible &&
+            <div className="stamp-link-wrapper">
               <div className="arrow-up" />
               <div className="stamp-link">
                 <Link to={'/' + this.state.startDate.unix()}>
@@ -93,6 +89,7 @@ class CreateStamp extends Component {
                 </Link>
               </div>
             </div>
+            }
           </Fragment>
         }
       />
