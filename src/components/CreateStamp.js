@@ -40,7 +40,7 @@ class CreateStamp extends Component {
                   onChange={date => {
                     this.setState({ startDate: date.tz(this.state.zoneName) });
                   }}
-                  dateFormat="MMMM DD, YYYY"
+                  dateFormat="DD MMMM YYYY"
                   withPortal
                 />
               </div>
