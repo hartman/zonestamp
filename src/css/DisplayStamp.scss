@@ -25,24 +25,29 @@
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-bottom: 15px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 15px solid var(--secondary-button-border-color);
   margin: 0.5rem auto 0;
 }
 
 .change-format {
-  color: #0896b9;
+  color: var(--primary-button-text-color);
   box-shadow: none;
   font-size: 1rem;
   padding: 0.4rem;
   border: none;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 1px;
+  background-color: var(--primary-button-background-color);
+  border-radius: var(--primary-button-border-radius);
   cursor: pointer;
-  font-family: 'Lobster', cursive;
+  font-family: var(--primary-button-font-family);
   margin: 0;
   position: absolute;
   top: -1.5rem;
   right: 0;
+
+  &:hover,
+  &:focus {
+    background-color: var(--focused-primary-button-background-color);
+  }
 }
 
 .atcb-button.atcb-button {
@@ -50,5 +55,5 @@
 }
 
 @media screen and (min-width: 720px) {
-  font-size: 120px;
+/*  font-size: 120px; */
 }

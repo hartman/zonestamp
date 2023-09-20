@@ -5,7 +5,7 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     a {
-      color: #fff;
+      color: var(--primary-link-color);;
       margin-top: 1rem;
     }
     .github {

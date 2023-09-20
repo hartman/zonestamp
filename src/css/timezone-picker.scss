@@ -1,32 +1,32 @@
 .timezone-picker.timezone-picker {
   min-width: 250px;
   font-size: 1rem;
-  font-family: 'Quicksand', sans-serif;
 
   .timezone-picker-select__control {
     background: none;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 3px;
-    color: #fff;
+    border: 1px solid var(--secondary-button-border-color);
+    border-radius: var(--secondary-button-border-radius);
+    color: var(--secondary-button-text-color);
     text-align: center;
+
     &::placeholder {
-      color: #fff;
+      color: var(--secondary-button-text-color);
     }
   }
   .timezone-picker-select__single-value,
   .timezone-picker-select__input-container {
-    color: #fff;
+    color: var(--secondary-button-text-color);
   }
   .timezone-picker-select__menu {
-    background-color: #0896b9;
-    color: #fff;
+    background-color: var(--secondary-button-background-color);
+    color: var(--secondary-button-text-color);
   }
   .timezone-picker-select__option--is-focused,
   .timezone-picker-select__option--is-selected {
-    background-color: #fff;
-    color: #0896b9;
+    background-color: var(--secondary-button-text-color);
+    color: var(--secondary-button-background-color);
   }
   .timezone-picker-select__dropdown-indicator:hover {
-    color: white;
+    color: var(--secondary-button-text-color);
   }
 }
