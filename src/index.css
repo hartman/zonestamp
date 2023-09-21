@@ -18,11 +18,14 @@
   --primary-button-border-radius: 3px;
   --primary-button-font-family: var(--decorative-font-family);
   --focused-primary-button-background-color: var(--primary-white-color);
+  --focused-primary-button-text-color: var(--primary-teal-color);
 
   --secondary-button-background-color: var(--primary-teal-color);
   --secondary-button-text-color: var(--muted-white-color);
   --secondary-button-border-color: var(--primary-border-color);
   --secondary-button-border-radius: 3px;
+  --focused-secondary-button-background-color: var(--primary-white-color);
+  --focused-secondary-button-text-color: var(--primary-teal-color);
 }
 
 body {
