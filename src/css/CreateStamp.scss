@@ -39,20 +39,57 @@ main p {
 }
 
 .stamp-link-wrapper {
-  a {
-    color: var(--secondary-button-text-color);
-    text-decoration: none;
-    border: 1px solid var(--secondary-button-border-color);
-    border-radius: var(--secondary-button-border-radius);
-    padding: 0.5rem;
-  }
+  display: flex;
+  flex-direction: column;
+
   .arrow-up {
     width: 0;
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 15px solid var(--secondary-button-border-color);
-    margin: 0.5rem auto;
+    margin: 0.5rem auto 0;
   }
+
+  .stamp-link {
+    display: flex;
+    flex-direction: row;
+  }
+
+  a {
+    color: var(--secondary-button-text-color);
+    text-decoration: none;
+    border: 1px solid var(--secondary-button-border-color);
+    border-right: none;
+    border-top-left-radius: var(--secondary-button-border-radius);
+    border-bottom-left-radius: var(--secondary-button-border-radius);
+    padding: 0.5rem;
+    flex: 1 1;
+  }
+
+  .copy-button {
+    flex: 0 1;
+    background: var(--secondary-button-background-color);
+    border: 1px solid var(--secondary-button-border-color);
+    border-top-right-radius: var(--secondary-button-border-radius);
+    border-bottom-right-radius: var(--secondary-button-border-radius);
+    color: var(--secondary-button-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: var(--focused-secondary-button-background-color);
+      color: var(--focused-secondary-button-text-color);
+    }
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
 }
 

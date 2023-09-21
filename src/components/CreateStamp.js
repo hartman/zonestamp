@@ -8,6 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../css/CreateStamp.scss';
 import '../css/DatepickerPortal.scss';
 import '../css/timezone-picker.scss';
+import {ReactComponent as CopyIcon} from '../images/copyIcon.svg';
+
 
 class CreateStamp extends Component {
   state = {
@@ -16,8 +18,19 @@ class CreateStamp extends Component {
     startDate: moment().startOf('minute'),
     stamplinkVisible: false
   };
+  zonestampLinkURI = () => {
+    return window.location.protocol + "//" + window.location.host + '/' +
+                  this.state.startDate.unix();
+  }
   showZonestampLink = () => {
     this.setState({ stamplinkVisible: !this.state.stamplinkVisible });
+  }
+  copyZonestampLink = () => {
+    navigator.clipboard.writeText(this.zonestampLinkURI()).then(() => {
+      console.log('Content copied to clipboard');
+    },() => {
+      console.error('Failed to copy');
+    });
   }
   render() {
     // Style to improve contrast of dropdown indicator and "no options" message
@@ -83,10 +96,15 @@ class CreateStamp extends Component {
             <div className="stamp-link-wrapper">
               <div className="arrow-up" />
               <div className="stamp-link">
-                <Link to={'/' + this.state.startDate.unix()}>
-                  {window.location.protocol + "//" + window.location.host}/
-                  {this.state.startDate.unix()}
+                <Link
+                  onClick={this.copyZonestampLink()}
+                  to={'/' + this.state.startDate.unix()}
+                >
+                  {this.zonestampLinkURI()}
                 </Link>
+                <button className="cdx-icon copy-button" onClick={this.copyZonestampLink}>
+                  <CopyIcon />
+                </button>
               </div>
             </div>
             }
