@@ -31,9 +31,7 @@ class StampDisplay extends Component {
     } );
   }
   loadMomentLocale() {
-    let language = 'en';
-    // let language = 'en-us';
-    // let language = window.navigator.language.toLowerCase();
+    let language = window.navigator.language.toLowerCase();
     if( !/^[a-z]{1,3}(?:-[a-z]{0,5})?$/.test(language) ) {
       return;
     }
