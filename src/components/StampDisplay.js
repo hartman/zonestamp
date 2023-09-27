@@ -13,10 +13,46 @@ class StampDisplay extends Component {
   state = {
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    format: moment.localeData().longDateFormat('LT'),
+    dateFormat: 'dddd, ' + moment.localeData().longDateFormat('LL'),
+    timeFormat: moment.localeData().longDateFormat('LT'),
     date: 0,
   };
+  actuallyLoadMomentLocale( language ) {
+    if (language === 'en') return Promise.resolve();
+    return import(
+      /* webpackInclude: /\.js$/ */
+      /* webpackChunkName: "moment" */
+      `moment/locale/${language}` ).then( (loadedModule) => {
+      console.log( `Loaded locale ${language}` );
+      return loadedModule;
+    }, (error) => {
+      console.warn( `Failure to load locale ${language}` );
+      throw error;
+    } );
+  }
+  loadMomentLocale() {
+    let language = 'en';
+    // let language = 'en-us';
+    // let language = window.navigator.language.toLowerCase();
+    if( !/^[a-z]{1,3}(?:-[a-z]{0,5})?$/.test(language) ) {
+      return;
+    }
+
+    this.actuallyLoadMomentLocale( language ).catch( (error) => {
+      language = language.slice(0, language.indexOf('-') );
+      console.log( `Attempting locale fallback ${language}`);
+      this.actuallyLoadMomentLocale( language ).catch( (error) => {
+        console.warn(`Failure to load locale ${language}`);
+      } )
+    } )
+  }
   componentDidMount() {
+    this.loadMomentLocale();
+    this.setState( {
+      dateFormat: 'dddd, ' + moment.localeData().longDateFormat('LL'),
+      timeFormat: moment.localeData().longDateFormat('LT')
+    } );
+
     this.initStateFromUrl();
   }
   componentDidUpdate() {
@@ -61,10 +97,10 @@ class StampDisplay extends Component {
     });
   }
   changeFormat = () => {
-    if (this.state.format === 'h:mm a' || this.state.format === 'h:mm A') {
-      this.setState({ format: 'HH:mm' });
+    if (this.state.timeFormat === 'h:mm a' || this.state.timeFormat === 'h:mm A') {
+      this.setState({ timeFormat: 'HH:mm' });
     } else {
-      this.setState({ format: 'h:mm a' });
+      this.setState({ timeFormat: 'h:mm a' });
     }
   }
   render() {
@@ -75,17 +111,17 @@ class StampDisplay extends Component {
           <Fragment>
             <p className="subhead">That's...</p>
             <div className="time-hour">
-              <Moment tz={this.state.zoneName} format={this.state.format} unix>
+              <Moment tz={this.state.zoneName} format={this.state.timeFormat} unix>
                 {this.state.date}
               </Moment>
             </div>
             <button
               className="change-format"
-              value={this.state.format}
+              value={this.state.timeFormat}
               onClick={this.changeFormat}>24h / 12h
             </button>
             <div className="time-day">
-              <Moment tz={this.state.zoneName} format="dddd, MMMM Do YYYY" unix>
+              <Moment tz={this.state.zoneName} format={this.state.dateFormat} unix>
                 {this.state.date}
               </Moment>
             </div>
