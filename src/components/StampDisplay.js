@@ -3,6 +3,7 @@ import App from './App';
 import TimezoneSelect from 'react-timezone-select'
 import Moment from 'react-moment';
 import moment from 'moment-timezone';
+import origMoment from 'moment';
 import { atcb_init } from 'add-to-calendar-button';
 import 'moment-timezone';
 import '../css/DisplayStamp.scss';
@@ -23,6 +24,7 @@ class StampDisplay extends Component {
       /* webpackInclude: /\.js$/ */
       /* webpackChunkName: "moment" */
       `moment/locale/${language}` ).then( (loadedModule) => {
+      origMoment.locale(language);
       console.log( `Loaded locale ${language}` );
       return loadedModule;
     }, (error) => {
@@ -33,10 +35,10 @@ class StampDisplay extends Component {
   loadMomentLocale() {
     let language = window.navigator.language.toLowerCase();
     if( !/^[a-z]{1,3}(?:-[a-z]{0,5})?$/.test(language) ) {
-      return;
+      return Promise.resolve();
     }
 
-    this.actuallyLoadMomentLocale( language ).catch( (error) => {
+    return this.actuallyLoadMomentLocale( language ).catch( (error) => {
       language = language.slice(0, language.indexOf('-') );
       console.log( `Attempting locale fallback ${language}`);
       this.actuallyLoadMomentLocale( language ).catch( (error) => {
@@ -45,13 +47,14 @@ class StampDisplay extends Component {
     } )
   }
   componentDidMount() {
-    this.loadMomentLocale();
-    this.setState( {
-      dateFormat: 'dddd, ' + moment.localeData().longDateFormat('LL'),
-      timeFormat: moment.localeData().longDateFormat('LT')
-    } );
+    this.loadMomentLocale().then( () => {
+      this.setState( {
+        dateFormat: 'dddd, ' + moment.localeData().longDateFormat('LL'),
+        timeFormat: moment.localeData().longDateFormat('LT')
+      } );
 
-    this.initStateFromUrl();
+      this.initStateFromUrl();
+    } );
   }
   componentDidUpdate() {
     if ( this.state.date > 0 ) {
