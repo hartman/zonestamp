@@ -74,10 +74,10 @@ class StampDisplay extends Component {
     const atcbConfig = {
       name: params.get('name') || 'Calendar event',
       description: params.get('description') || null,
-      startDate: moment.unix(datestamp).format('YYYY-MM-DD'),
-      endDate: moment.unix(datestamp).format('YYYY-MM-DD'),
-      startTime: moment.unix(endDatestamp).format('HH:mm'),
-      endTime: moment.unix(endDatestamp).format('HH:mm'),
+      startDate: moment.unix(datestamp).utc().format('YYYY-MM-DD'),
+      endDate: moment.unix(datestamp).utc().format('YYYY-MM-DD'),
+      startTime: moment.unix(endDatestamp).utc().format('HH:mm'),
+      endTime: moment.unix(endDatestamp).utc().format('HH:mm'),
       timeZone: 'GMT',
       location: params.get('location') || null,
       options: [
