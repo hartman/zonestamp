@@ -1,39 +1,55 @@
 import React, { Component, Fragment } from 'react';
 import App from './App';
-import moment from 'moment-timezone';
 import DatePicker from 'react-datepicker';
-import TimezoneSelect from 'react-timezone-select'
+import TimezoneSelect from 'react-timezone-select';
 import { Link } from 'react-router-dom';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../css/CreateStamp.scss';
 import '../css/DatepickerPortal.scss';
 import '../css/timezone-picker.scss';
-import {ReactComponent as CopyIcon} from '../images/copyIcon.svg';
-
+import { ReactComponent as CopyIcon } from '../images/copyIcon.svg';
+import moment from 'moment-timezone';
 
 class CreateStamp extends Component {
   state = {
+    // Get the browser's default zone for later comparison
+    defaultZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     zoneName: Intl.DateTimeFormat().resolvedOptions().timeZone,
     startDate: moment().startOf('minute'),
     stamplinkVisible: false
   };
+
+  // Generate a link using a human–readable string (YYYYMMDDHHmmss) and timezone offset.
   zonestampLinkURI = () => {
-    return window.location.protocol + "//" + window.location.host + '/' +
-                  this.state.startDate.unix();
-  }
+    const { startDate, zoneName, defaultZone } = this.state;
+    let formatted, timezoneOffset;
+    // If the selected zone is the same as the default, use local formatting.
+    if (zoneName === defaultZone) {
+      formatted = startDate.format("YYYYMMDDHHmmss");
+      timezoneOffset = startDate.format("ZZ");
+    } else {
+      // Otherwise, format the date in the selected zone.
+      formatted = startDate.tz(zoneName).format("YYYYMMDDHHmmss");
+      timezoneOffset = startDate.tz(zoneName).format("ZZ");
+    }
+    return `${window.location.protocol}//${window.location.host}/UTC=${formatted}&timezone=${timezoneOffset}`;
+  };
+
   showZonestampLink = () => {
     this.setState({ stamplinkVisible: !this.state.stamplinkVisible });
-  }
+  };
+
   copyZonestampLink = () => {
-    navigator.clipboard.writeText(this.zonestampLinkURI()).then(() => {
-      console.log('Content copied to clipboard');
-    },() => {
+    const link = this.zonestampLinkURI();
+    navigator.clipboard.writeText(link).then(() => {
+      console.log('Content copied to clipboard:', link);
+    }, () => {
       console.error('Failed to copy');
     });
-  }
+  };
+
   render() {
-    // Style to improve contrast of dropdown indicator and "no options" message
     const style = {
       dropdownIndicator: (base, state) => ({
         ...base,
@@ -41,6 +57,7 @@ class CreateStamp extends Component {
       }),
       noOptionsMessage: (base) => ({ ...base, color: 'white' })
     };
+
     return (
       <App
         main={
@@ -90,24 +107,26 @@ class CreateStamp extends Component {
             />
             <button
               className="stamp-generate"
-              onClick={this.showZonestampLink}>Generate Stamp!
+              onClick={this.showZonestampLink}
+            >
+              Generate Stamp!
             </button>
-            { this.state.stamplinkVisible &&
-            <div className="stamp-link-wrapper">
-              <div className="arrow-up" />
-              <div className="stamp-link">
-                <Link
-                  onClick={this.copyZonestampLink()}
-                  to={'/' + this.state.startDate.unix()}
-                >
-                  {this.zonestampLinkURI()}
-                </Link>
-                <button className="cdx-icon copy-button" onClick={this.copyZonestampLink}>
-                  <CopyIcon />
-                </button>
+            {this.state.stamplinkVisible && (
+              <div className="stamp-link-wrapper">
+                <div className="arrow-up" />
+                <div className="stamp-link">
+                  <Link
+                    onClick={this.copyZonestampLink}
+                    to={'/' + this.state.startDate.unix()}
+                  >
+                    {this.zonestampLinkURI()}
+                  </Link>
+                  <button className="cdx-icon copy-button" onClick={this.copyZonestampLink}>
+                    <CopyIcon />
+                  </button>
+                </div>
               </div>
-            </div>
-            }
+            )}
           </Fragment>
         }
       />

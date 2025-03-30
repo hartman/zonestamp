@@ -8,13 +8,13 @@ const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/">
-	<CreateStamp />
+        <CreateStamp />
       </Route>
-      <Route path="/(\d{10})">
-	<StampDisplay />
+      <Route path="/:timestamp">
+        <StampDisplay/>
       </Route>
       <Route>
-	<NotFound />
+        <NotFound />
       </Route>
     </Switch>
   </BrowserRouter>
