@@ -227,10 +227,12 @@ import AppLayout from '../components/AppLayout.vue'
 import TimezoneSelect from '../components/TimezoneSelect.vue'
 import { useTimezone } from '../composables/useTimezone'
 import { useMobileDetection } from '../composables/useMobileDetection'
+import { useTimeFormat } from '../composables/useTimeFormat'
 
 const { t } = useI18n()
 
 const { detectedZone } = useTimezone()
+const { formatTime, formatDate } = useTimeFormat()
 const zone = ref(detectedZone.value)
 const dt = ref(DateTime.now().startOf('minute').setZone(zone.value))
 const stampVisible = ref(false)
@@ -343,21 +345,10 @@ function onNativeTimeChange(e: Event, isEnd = false) {
 }
 
 // ── Display ────────────────────────────────────────────────────────────────────
-const displayDate = computed(() => dt.value.toFormat('LLL d, yyyy'))
-const displayTime = computed(() =>
-  dt.value.toLocaleString(
-    { hour: 'numeric', minute: '2-digit', hour12: true },
-    { locale: navigator.language },
-  ),
-)
-
-const displayEndDate = computed(() => endDt.value.toFormat('LLL d, yyyy'))
-const displayEndTime = computed(() =>
-  endDt.value.toLocaleString(
-    { hour: 'numeric', minute: '2-digit', hour12: true },
-    { locale: navigator.language },
-  ),
-)
+const displayDate = computed(() => formatDate(dt.value))
+const displayTime = computed(() => formatTime(dt.value))
+const displayEndDate = computed(() => formatDate(endDt.value))
+const displayEndTime = computed(() => formatTime(endDt.value))
 
 const qrCanvasRef = ref<HTMLCanvasElement | null>(null)
 const canShareFiles = ref(false)

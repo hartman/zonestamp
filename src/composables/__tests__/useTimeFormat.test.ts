@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { computed } from 'vue'
 import { DateTime } from 'luxon'
 
 // Reset module and localStorage between tests so the module-level `is24h` ref starts fresh
@@ -119,6 +120,36 @@ describe('formatDate', () => {
   it('includes the month name', async () => {
     const { formatDate } = await fresh()
     expect(formatDate(noon)).toMatch(/June/i)
+  })
+})
+
+describe('reactivity — computed wrapping formatTime/formatDate', () => {
+  // Regression: CreateStampView used to inline format options, ignoring the composable's
+  // reactive state. These tests verify that a computed() using formatTime/formatDate
+  // reflects format changes without needing to re-call the composable.
+  it('displayTime computed updates when format is toggled to 24h', async () => {
+    const { formatTime, toggleFormat } = await fresh()
+    const displayTime = computed(() => formatTime(noon))
+    expect(displayTime.value).toMatch(/PM|pm/i)
+    toggleFormat()
+    expect(displayTime.value).not.toMatch(/AM|PM/i)
+  })
+
+  it('displayTime computed updates when format is toggled back to 12h', async () => {
+    const { formatTime, toggleFormat } = await fresh()
+    const displayTime = computed(() => formatTime(noon))
+    toggleFormat()
+    toggleFormat()
+    expect(displayTime.value).toMatch(/PM|pm/i)
+  })
+
+  it('displayDate computed updates when locale changes', async () => {
+    const { formatDate, setLocale } = await fresh()
+    const displayDate = computed(() => formatDate(noon))
+    setLocale('en-US')
+    expect(displayDate.value).toMatch(/June/i)
+    setLocale('de-DE')
+    expect(displayDate.value).toMatch(/Juni/i)
   })
 })
 
