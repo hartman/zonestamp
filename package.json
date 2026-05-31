@@ -1,6 +1,6 @@
 {
   "name": "zonestamp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Timezone converter for events — create a shareable stamp link that shows each visitor the event time in their own timezone",
   "homepage": "https://zonestamp.toolforge.org",
   "author": "Derk-Jan Hartman",
