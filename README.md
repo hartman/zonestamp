@@ -1,5 +1,7 @@
 # zoneStamp!
 
+<img align="right" src="docs/screenshots/current-create-simple-mobile.png" width="160" alt="ZoneStamp create view on mobile">
+
 ZoneStamp is a timezone converter for events. If you run events with an audience spread across different timezones, ZoneStamp makes it easy to create a shareable "stamp" link for your event's date and time. When a recipient clicks the link, ZoneStamp automatically shows the time in *their* timezone — no mental math required.
 
 **Live site**: [zonestamp.toolforge.org](https://zonestamp.toolforge.org) (also at [zonestamp.com](https://zonestamp.com))
@@ -12,6 +14,13 @@ ZoneStamp is a timezone converter for events. If you run events with an audience
 4. Paste the link in your email, newsletter, or chat — recipients see the time converted to their local timezone.
 
 The stamp link also offers an **Add to Calendar** button for Google Calendar, Outlook, Office 365, Yahoo, and iCal downloads.
+
+<table>
+<tr>
+<td><img src="docs/screenshots/current-create-stamp-result-mobile.png" width="200" alt="Generated stamp link and QR code on mobile"></td>
+<td><img src="docs/screenshots/current-display-complex-mobile-collapsed.png" width="200" alt="Event details revealed on mobile"></td>
+</tr>
+</table>
 
 ## URL format
 
