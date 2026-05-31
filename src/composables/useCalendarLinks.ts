@@ -17,6 +17,12 @@ function toUtcIso(date: Date): string {
   return date.toISOString().replace(/\.\d{3}/, '')
 }
 
+// Google/Yahoo/Outlook have no dedicated URL field — prepend it before the description.
+function descriptionWithUrl(description?: string, url?: string): string | undefined {
+  if (!url) return description || undefined
+  return description ? `${url}\n\n${description}` : url
+}
+
 function outlookUrl(params: URLSearchParams, base: string): string {
   return `${base}?${params.toString()}`
 }
@@ -27,6 +33,7 @@ function buildOutlookParams(
   title: string,
   description?: string,
   location?: string,
+  url?: string,
 ): URLSearchParams {
   const p = new URLSearchParams({
     path: '/calendar/action/compose',
@@ -36,7 +43,8 @@ function buildOutlookParams(
     subject: title,
     allday: 'false',
   })
-  if (description) p.set('body', description)
+  const body = descriptionWithUrl(description, url)
+  if (body) p.set('body', body)
   if (location) p.set('location', location)
   return p
 }
@@ -44,15 +52,31 @@ function buildOutlookParams(
 export function useCalendarLinks(opts: CalendarLinkOptions) {
   const startDate = computed(() => new Date(opts.startTs.value * 1000))
 
-  const event = computed((): CalendarEvent => ({
+  const timingFields = computed(() =>
+    opts.endTs.value !== null
+      ? { end: new Date(opts.endTs.value * 1000) }
+      : { duration: [1, 'hour'] as [number, 'hour'] },
+  )
+
+  // ICS has a native URL property — keep url as a separate field.
+  const icsEvent = computed((): CalendarEvent => ({
     title: opts.title.value || 'Event',
     start: startDate.value,
-    ...(opts.endTs.value !== null
-      ? { end: new Date(opts.endTs.value * 1000) }
-      : { duration: [1, 'hour'] as [number, 'hour'] }),
+    ...timingFields.value,
     ...(opts.description?.value ? { description: opts.description.value } : {}),
     ...(opts.location?.value ? { location: opts.location.value } : {}),
     ...(opts.url?.value ? { url: opts.url.value } : {}),
+  }))
+
+  // Google/Yahoo have no dedicated URL field — append it to description.
+  const webEvent = computed((): CalendarEvent => ({
+    title: opts.title.value || 'Event',
+    start: startDate.value,
+    ...timingFields.value,
+    ...(descriptionWithUrl(opts.description?.value, opts.url?.value)
+      ? { description: descriptionWithUrl(opts.description?.value, opts.url?.value) }
+      : {}),
+    ...(opts.location?.value ? { location: opts.location.value } : {}),
   }))
 
   const endDate = computed(() =>
@@ -61,14 +85,14 @@ export function useCalendarLinks(opts: CalendarLinkOptions) {
       : new Date(opts.startTs.value * 1000 + 3600_000),
   )
 
-  const googleUrl = computed(() => google(event.value))
-  const yahooUrl = computed(() => yahoo(event.value))
+  const googleUrl = computed(() => google(webEvent.value))
+  const yahooUrl = computed(() => yahoo(webEvent.value))
 
   // ics() returns a data URI — decode it to get the raw ICS string so the
   // component can create a Blob URL, which browsers open in Calendar.app
   // rather than rendering as text.
   const icsContent = computed(() => {
-    const dataUri = ics(event.value)
+    const dataUri = ics(icsEvent.value)
     return decodeURIComponent(dataUri.replace('data:text/calendar;charset=utf8,', ''))
   })
 
@@ -79,6 +103,7 @@ export function useCalendarLinks(opts: CalendarLinkOptions) {
       opts.title.value || 'Event',
       opts.description?.value,
       opts.location?.value,
+      opts.url?.value,
     ),
   )
 

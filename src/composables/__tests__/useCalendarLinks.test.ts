@@ -39,6 +39,28 @@ describe('useCalendarLinks', () => {
       })
       expect(googleUrl.value).toContain('Event')
     })
+
+    it('includes url in details when no description', () => {
+      const { googleUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        url: ref('https://example.com'),
+      })
+      expect(googleUrl.value).toContain('example.com')
+    })
+
+    it('prepends url before description in details', () => {
+      const { googleUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        description: ref('A description'),
+        url: ref('https://example.com'),
+      })
+      const details = new URL(googleUrl.value).searchParams.get('details')!
+      expect(details.indexOf('example.com')).toBeLessThan(details.indexOf('A description'))
+    })
   })
 
   describe('Outlook.com URL', () => {
@@ -82,6 +104,28 @@ describe('useCalendarLinks', () => {
       expect(outlookUrl.value).toContain('location=Amsterdam')
     })
 
+    it('includes url in body when no description', () => {
+      const { outlookUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        url: ref('https://example.com'),
+      })
+      expect(outlookUrl.value).toContain('example.com')
+    })
+
+    it('prepends url before description in body', () => {
+      const { outlookUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        description: ref('A description'),
+        url: ref('https://example.com'),
+      })
+      const body = new URL(outlookUrl.value).searchParams.get('body')!
+      expect(body.indexOf('example.com')).toBeLessThan(body.indexOf('A description'))
+    })
+
     it('points to outlook.live.com', () => {
       const { outlookUrl } = useCalendarLinks({
         title: ref('Test Event'),
@@ -111,6 +155,30 @@ describe('useCalendarLinks', () => {
       // Must end with Z suffix — confirms UTC, not local time
       expect(office365Url.value).toContain('startdt=2026-05-30T11%3A37%3A00Z')
       expect(office365Url.value).toContain('enddt=2026-05-30T12%3A37%3A00Z')
+    })
+  })
+
+  describe('Yahoo Calendar URL', () => {
+    it('includes url in desc when no description', () => {
+      const { yahooUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        url: ref('https://example.com'),
+      })
+      expect(yahooUrl.value).toContain('example.com')
+    })
+
+    it('prepends url before description in desc', () => {
+      const { yahooUrl } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        description: ref('A description'),
+        url: ref('https://example.com'),
+      })
+      const desc = new URL(yahooUrl.value).searchParams.get('desc')!
+      expect(desc.indexOf('example.com')).toBeLessThan(desc.indexOf('A description'))
     })
   })
 
@@ -150,6 +218,30 @@ describe('useCalendarLinks', () => {
         endTs: ref(null),
       })
       expect(icsContent.value).toContain('SUMMARY:My Event')
+    })
+
+    it('includes URL property when url is provided', () => {
+      const { icsContent } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        url: ref('https://example.com'),
+      })
+      expect(icsContent.value).toContain('URL:https://example.com')
+    })
+
+    it('does not duplicate url in DESCRIPTION when both are provided', () => {
+      const { icsContent } = useCalendarLinks({
+        title: ref('Test Event'),
+        startTs: ref(START_TS),
+        endTs: ref(null),
+        description: ref('A description'),
+        url: ref('https://example.com'),
+      })
+      expect(icsContent.value).toContain('URL:https://example.com')
+      expect(icsContent.value).toContain('DESCRIPTION:A description')
+      // url should appear exactly once (in URL: property, not also in DESCRIPTION)
+      expect(icsContent.value.split('example.com').length - 1).toBe(1)
     })
 
     it('works across midnight (next-day end time)', () => {
