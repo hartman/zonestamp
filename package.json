@@ -1,0 +1,47 @@
+{
+  "name": "zonestamp",
+  "version": "0.1.0",
+  "description": "Timezone converter for events — create a shareable stamp link that shows each visitor the event time in their own timezone",
+  "homepage": "https://zonestamp.toolforge.org",
+  "author": "Derk-Jan Hartman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hartman/zonestamp.git",
+    "branch": "zonestamp-ng"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^13.0.0",
+    "calendar-link": "^2.11.2",
+    "luxon": "^3.7.2",
+    "qrcode": "^1.5.4",
+    "reka-ui": "^2.9.8",
+    "vue": "^3.5.34",
+    "vue-i18n": "^9.14.5",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.12.3",
+    "@types/qrcode": "^1.5.6",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.9.1",
+    "jsdom": "^29.1.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12",
+    "vitest": "^4.1.7",
+    "vue-tsc": "^3.2.8"
+  }
+}

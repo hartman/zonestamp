@@ -1,0 +1,39 @@
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Environment variable overrides (committed: .env, .env.toolforge)
+.env.local
+.env.*.local
+*.local
+
+# Editor and IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+test-results/
+playwright-report/
+
+# Claude Code tooling
+.claude/
+.playwright-mcp/
+
+# Development screenshot artifacts at repo root
+/*.png

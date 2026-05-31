@@ -1,0 +1,49 @@
+:root {
+  --primary-teal-color: #0c7fa2;
+  --primary-white-color: #fff;
+  --muted-white-color: rgba(255, 255, 255, 0.85);
+
+  --primary-font-family: 'Quicksand', sans-serif;
+  --decorative-font-family: 'Lobster', cursive;
+
+  --primary-background-color: var(--primary-teal-color);
+  --primary-text-color: var(--primary-white-color);
+  --primary-link-color: var(--primary-white-color);
+  --primary-border-color: var(--muted-white-color);
+  --inverted-background-color: var(--primary-white-color);
+  --inverted-text-color: var(--primary-teal-color);
+
+  --primary-button-background-color: var(--muted-white-color);
+  --primary-button-text-color: var(--primary-teal-color);
+  --primary-button-border-radius: 3px;
+  --primary-button-font-family: var(--decorative-font-family);
+  --focused-primary-button-background-color: var(--primary-white-color);
+  --focused-primary-button-text-color: var(--primary-teal-color);
+
+  --secondary-button-background-color: var(--primary-teal-color);
+  --secondary-button-text-color: var(--muted-white-color);
+  --secondary-button-border-color: var(--primary-border-color);
+  --secondary-button-border-radius: 3px;
+  --focused-secondary-button-background-color: var(--primary-white-color);
+  --focused-secondary-button-text-color: var(--primary-teal-color);
+
+  /* Transparent white overlays (for surfaces, hovers, borders on teal background) */
+  --white-alpha-10: rgba(255, 255, 255, 0.10);
+  --white-alpha-12: rgba(255, 255, 255, 0.12);
+  --white-alpha-15: rgba(255, 255, 255, 0.15);
+  --white-alpha-20: rgba(255, 255, 255, 0.20);
+  --white-alpha-25: rgba(255, 255, 255, 0.25);
+  --white-alpha-30: rgba(255, 255, 255, 0.30);
+  --white-alpha-40: rgba(255, 255, 255, 0.40);
+  --white-alpha-60: rgba(255, 255, 255, 0.60);
+  --white-alpha-80: rgba(255, 255, 255, 0.80);
+
+  /* Validation */
+  --error-color: #ffd6d6;
+
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.40);
+
+  /* Date picker background (slightly darker teal for visual depth) */
+  --picker-background-color: #0b759a;
+}

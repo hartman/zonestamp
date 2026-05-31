@@ -1,0 +1,95 @@
+export default {
+  header: {
+    openSettings: 'Open settings',
+  },
+
+  menu: {
+    title: 'Settings',
+    close: 'Close settings',
+    clockFormat: {
+      label: 'Clock format',
+      hour12: '12h',
+      hour24: '24h',
+      toggle: 'Toggle 24-hour clock',
+    },
+    dateFormat: 'Date format',
+    browserDefault: 'Browser default',
+    about: {
+      makeYourOwn: 'Make your own zoneStamp!',
+      reportIssue: 'Report an issue',
+      license: 'MIT License',
+    },
+  },
+
+  footer: {
+    madeBy: 'Made by',
+    originallyBy: 'originally by',
+  },
+
+  create: {
+    intro: 'The event will take place at',
+    on: 'on',
+    eventName: 'Event name',
+    description: 'Description',
+    location: 'Location',
+    urlPlaceholder: 'https://…',
+    urlInvalid: 'URL must start with https://',
+    addEndTime: 'Add end time',
+    showOptions: 'Show event options',
+    hideOptions: 'Hide event options',
+    eventTime: 'Event time',
+    eventDate: 'Event date',
+    endTime: 'End time',
+    endDate: 'End date',
+    generate: 'Generate Stamp!',
+    shareQrCode: 'Share QR code',
+    downloadQrCode: 'Download QR code',
+    shareLink: 'Share link',
+    copied: 'Copied!',
+    copyLink: 'Copy link',
+    pageTitle: 'zoneStamp! — Timezone converter for online events',
+  },
+
+  display: {
+    thats: "That's...",
+    switchTo12h: 'Switch to 12-hour format',
+    switchTo24h: 'Switch to 24-hour format',
+    format12h: '12h',
+    format24h: '24h',
+    ending: 'Ending:',
+    revealDetails: '↓ Reveal details and options',
+    backToTimes: 'Back to time view',
+    addToCalendar: 'Add to Calendar',
+    close: 'Close',
+    calendarFallbackName: 'Event',
+    calendar: {
+      google: 'Google Calendar',
+      apple: 'Apple / iCal',
+      outlook: 'Outlook.com',
+      office365: 'Office 365',
+      yahoo: 'Yahoo Calendar',
+    },
+    pageTitle: '{name} — zoneStamp!',
+    pageTitleTime: '{time} · {date} — zoneStamp!',
+  },
+
+  tz: {
+    selectTimezone: 'Select timezone',
+    ariaLabel: 'Timezone: {zone}',
+    close: 'Close',
+    search: 'Search timezones',
+    searchPlaceholder: 'Search…',
+    clearSearch: 'Clear search',
+    noResults: 'No timezones found',
+    results: '{count} results',
+    regions: 'Timezone regions',
+    regionZones: '{region} timezones',
+    backToRegions: 'Back to regions',
+    utcLabel: 'UTC · UTC+0',
+  },
+
+  notFound: {
+    message: 'Page not found.',
+    makeNew: 'Make a new zoneStamp!',
+  },
+}
