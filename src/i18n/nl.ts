@@ -1,0 +1,95 @@
+export default {
+  header: {
+    openSettings: 'Instellingen openen',
+  },
+
+  menu: {
+    title: 'Instellingen',
+    close: 'Instellingen sluiten',
+    clockFormat: {
+      label: 'Tijdformaat',
+      hour12: '12u',
+      hour24: '24u',
+      toggle: 'Wissel naar 24-uursklok',
+    },
+    dateFormat: 'Datumformaat',
+    browserDefault: 'Browserstandaard',
+    about: {
+      makeYourOwn: 'Maak je eigen zoneStamp!',
+      reportIssue: 'Probleem melden',
+      license: 'MIT-licentie',
+    },
+  },
+
+  footer: {
+    madeBy: 'Gemaakt door',
+    originallyBy: 'oorspronkelijk door',
+  },
+
+  create: {
+    intro: 'Het evenement vindt plaats om',
+    on: 'op',
+    eventName: 'Naam evenement',
+    description: 'Beschrijving',
+    location: 'Locatie',
+    urlPlaceholder: 'https://…',
+    urlInvalid: 'URL moet beginnen met https://',
+    addEndTime: 'Eindtijd toevoegen',
+    showOptions: 'Evenementopties tonen',
+    hideOptions: 'Evenementopties verbergen',
+    eventTime: 'Tijdstip',
+    eventDate: 'Datum',
+    endTime: 'Eindtijd',
+    endDate: 'Einddatum',
+    generate: 'Maak Stamp!',
+    shareQrCode: 'QR-code delen',
+    downloadQrCode: 'QR-code downloaden',
+    shareLink: 'Link delen',
+    copied: 'Gekopieerd!',
+    copyLink: 'Link kopiëren',
+    pageTitle: 'zoneStamp! — Tijdzone onafhankelijk links voor evenementen',
+  },
+
+  display: {
+    thats: 'Dat is...',
+    switchTo12h: 'Wissel naar 12-uursformaat',
+    switchTo24h: 'Wissel naar 24-uursformaat',
+    format12h: '12u',
+    format24h: '24u',
+    ending: 'Eindigt:',
+    revealDetails: '↓ Details en opties tonen',
+    backToTimes: 'Terug naar tijdweergave',
+    addToCalendar: 'Toevoegen aan agenda',
+    close: 'Sluiten',
+    calendarFallbackName: 'Evenement',
+    calendar: {
+      google: 'Google Agenda',
+      apple: 'Apple / iCal',
+      outlook: 'Outlook.com',
+      office365: 'Office 365',
+      yahoo: 'Yahoo Agenda',
+    },
+    pageTitle: '{name} — zoneStamp!',
+    pageTitleTime: '{time} · {date} — zoneStamp!',
+  },
+
+  tz: {
+    selectTimezone: 'Tijdzone kiezen',
+    ariaLabel: 'Tijdzone: {zone}',
+    close: 'Sluiten',
+    search: 'Tijdzones zoeken',
+    searchPlaceholder: 'Zoeken…',
+    clearSearch: 'Zoekopdracht wissen',
+    noResults: 'Geen tijdzones gevonden',
+    results: '{count} resultaten',
+    regions: 'Tijdzoneregio\'s',
+    regionZones: '{region} tijdzones',
+    backToRegions: 'Terug naar regio\'s',
+    utcLabel: 'UTC · UTC+0',
+  },
+
+  notFound: {
+    message: 'Pagina niet gevonden.',
+    makeNew: 'Maak een nieuwe zoneStamp!',
+  },
+}
