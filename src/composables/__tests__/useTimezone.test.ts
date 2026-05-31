@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { searchZones, regions, allZones } from '../useTimezone'
+import { searchZones, regions, allZones, resolveZone, zoneAbbr, zoneTriggerLabel } from '../useTimezone'
 
 // ── useRecentZones ─────────────────────────────────────────────────────────────
 
@@ -149,6 +149,52 @@ describe('searchZones', () => {
   it('does not return duplicate zones', () => {
     const result = searchZones('amsterdam')
     expect(new Set(result).size).toBe(result.length)
+  })
+})
+
+describe('Anywhere on Earth (AoE)', () => {
+  it('is present in allZones', () => {
+    expect(allZones).toContain('AoE/Anywhere_on_Earth')
+  })
+
+  it('resolves to Etc/GMT+12', () => {
+    expect(resolveZone('AoE/Anywhere_on_Earth')).toBe('Etc/GMT+12')
+  })
+
+  it('resolveZone is a no-op for regular zones', () => {
+    expect(resolveZone('America/New_York')).toBe('America/New_York')
+    expect(resolveZone('UTC')).toBe('UTC')
+  })
+
+  it('has abbreviation AoE', () => {
+    expect(zoneAbbr('AoE/Anywhere_on_Earth')).toBe('AoE')
+  })
+
+  it('is found by searching "anywhere"', () => {
+    expect(searchZones('anywhere')).toContain('AoE/Anywhere_on_Earth')
+  })
+
+  it('is found by exact abbreviation search "aoe"', () => {
+    expect(searchZones('aoe')).toContain('AoE/Anywhere_on_Earth')
+  })
+
+  it('is ranked first when searching "aoe" (exact abbr match)', () => {
+    expect(searchZones('aoe')[0]).toBe('AoE/Anywhere_on_Earth')
+  })
+
+  it('zoneTriggerLabel shows friendly name and UTC-12 offset', () => {
+    const label = zoneTriggerLabel('AoE/Anywhere_on_Earth')
+    expect(label).toContain('Anywhere on Earth')
+    expect(label).toContain('UTC-12')
+    expect(label).toContain('(AoE)')
+  })
+
+  it('is persisted and reloaded from recent zones', async () => {
+    const { recentZones, addRecentZone } = await freshRecent()
+    addRecentZone('AoE/Anywhere_on_Earth')
+    expect(recentZones.value).toContain('AoE/Anywhere_on_Earth')
+    const stored = JSON.parse(localStorage.getItem('zonestamp:recentZones')!)
+    expect(stored).toContain('AoE/Anywhere_on_Earth')
   })
 })
 

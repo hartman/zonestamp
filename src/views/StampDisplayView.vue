@@ -122,7 +122,7 @@ import { useI18n } from 'vue-i18n'
 import AppLayout from '../components/AppLayout.vue'
 import TimezoneSelect from '../components/TimezoneSelect.vue'
 import { appConfig } from '../config/app'
-import { useTimezone, zoneTriggerLabel } from '../composables/useTimezone'
+import { useTimezone, zoneTriggerLabel, resolveZone } from '../composables/useTimezone'
 import { useTimeFormat } from '../composables/useTimeFormat'
 import { useCalendarLinks } from '../composables/useCalendarLinks'
 import { useMobileDetection } from '../composables/useMobileDetection'
@@ -137,7 +137,7 @@ const { is24h, toggleFormat, formatTime, formatDate } = useTimeFormat()
 const displayZone = ref(detectedZone.value)
 
 const ts = computed(() => parseInt(props.timestamp, 10))
-const dt = computed(() => DateTime.fromSeconds(ts.value).setZone(displayZone.value))
+const dt = computed(() => DateTime.fromSeconds(ts.value).setZone(resolveZone(displayZone.value)))
 
 // ── Calendar data from query params ───────────────────────────────────────────
 const calendarName = computed(() => (route.query.name as string) ?? '')
@@ -165,7 +165,7 @@ watchEffect(() => {
 })
 
 const endDt = computed(() =>
-  calEndTs.value !== null ? DateTime.fromSeconds(calEndTs.value).setZone(displayZone.value) : null,
+  calEndTs.value !== null ? DateTime.fromSeconds(calEndTs.value).setZone(resolveZone(displayZone.value)) : null,
 )
 const sameDay = computed(() => endDt.value !== null && dt.value.toISODate() === endDt.value.toISODate())
 

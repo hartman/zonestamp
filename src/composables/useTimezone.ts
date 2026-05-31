@@ -2,12 +2,21 @@ import { ref } from 'vue'
 import { DateTime } from 'luxon'
 import { lsGet, lsSet } from './useStorage'
 
-export const allZones: string[] = Intl.supportedValuesOf('timeZone')
+// Synthetic zone identifiers → real IANA zones used for actual time computation
+const ZONE_ALIASES: Record<string, string> = {
+  'AoE/Anywhere_on_Earth': 'Etc/GMT+12',
+}
+
+export function resolveZone(zone: string): string {
+  return ZONE_ALIASES[zone] ?? zone
+}
+
+export const allZones: string[] = [...Intl.supportedValuesOf('timeZone'), ...Object.keys(ZONE_ALIASES)]
 
 // Regions sorted by number of zones they contain, descending
-const HIDDEN_REGIONS = new Set(['Etc', 'UTC'])
+const HIDDEN_REGIONS = new Set(['Etc', 'UTC', 'AoE'])
 
-export const regions: string[] = [...new Set(allZones.map((z) => z.split('/')[0]))]
+export const regions: string[] = [...new Set(allZones.filter((z) => z.includes('/')).map((z) => z.split('/')[0]))]
   .filter((r) => !HIDDEN_REGIONS.has(r))
   .sort((a, b) => {
     const aCount = allZones.filter((z) => z.startsWith(a + '/')).length
@@ -20,7 +29,7 @@ const _now = new Date()
 const _displayNames = new Map<string, string>()
 const _shortNames = new Map<string, string>()
 
-for (const zone of allZones) {
+for (const zone of Intl.supportedValuesOf('timeZone')) {
   const getPart = (fmt: 'longGeneric' | 'short') =>
     new Intl.DateTimeFormat('en', { timeZone: zone, timeZoneName: fmt })
       .formatToParts(_now)
@@ -29,12 +38,16 @@ for (const zone of allZones) {
   _shortNames.set(zone, getPart('short')) // original case — used for display
 }
 
+// Synthetic zones: pre-populate display/abbreviation manually (Intl can't look them up)
+_displayNames.set('AoE/Anywhere_on_Earth', 'anywhere on earth')
+_shortNames.set('AoE/Anywhere_on_Earth', 'AoE')
+
 export function zoneAbbr(zone: string): string {
   return _shortNames.get(zone) ?? ''
 }
 
 export function tzOffset(zone: string): string {
-  const offset = DateTime.now().setZone(zone).offset
+  const offset = DateTime.now().setZone(resolveZone(zone)).offset
   const sign = offset >= 0 ? '+' : '-'
   const h = Math.floor(Math.abs(offset) / 60)
   const m = Math.abs(offset) % 60

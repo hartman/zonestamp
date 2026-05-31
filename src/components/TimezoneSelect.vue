@@ -250,7 +250,7 @@ import { computed, nextTick, ref } from 'vue'
 import { DateTime } from 'luxon'
 import { useI18n } from 'vue-i18n'
 import { PopoverAnchor, PopoverContent, PopoverPortal, PopoverRoot } from 'reka-ui'
-import { allZones, regions, searchZones, useRecentZones, zoneAbbr } from '../composables/useTimezone'
+import { allZones, regions, searchZones, useRecentZones, zoneAbbr, resolveZone } from '../composables/useTimezone'
 import { useMobileDetection } from '../composables/useMobileDetection'
 
 const { t } = useI18n()
@@ -311,7 +311,7 @@ function topLevelIndex(item: string): number {
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 function tzOffset(zone: string): string {
-  const offset = DateTime.now().setZone(zone).offset
+  const offset = DateTime.now().setZone(resolveZone(zone)).offset
   const sign = offset >= 0 ? '+' : '-'
   const h = Math.floor(Math.abs(offset) / 60)
   const m = Math.abs(offset) % 60

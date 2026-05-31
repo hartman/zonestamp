@@ -30,6 +30,22 @@ All brand colors in `src/assets/tokens.css`. **Never hardcode color values in co
 
 VueDatePicker `--dp-*` CSS variables and `.tz-content` popover styles are in **non-scoped** `<style>` blocks — these elements are teleported outside the component DOM and scoped CSS won't reach them.
 
+## Timezone zone identifiers and resolveZone
+
+`allZones` in `useTimezone.ts` contains both real IANA zones and synthetic alias zones (e.g. `'AoE/Anywhere_on_Earth'`). Synthetic zones have human-readable names and are hidden from the region browser, but they are **not valid IANA timezone strings** and will be silently mishandled by Luxon and `Intl`.
+
+**Always call `resolveZone(zone)` before passing a zone to Luxon or Intl** — it maps synthetic zones to their real IANA equivalent (`Etc/GMT+12`) and is a no-op for regular zones.
+
+```ts
+// ✓ correct
+DateTime.fromSeconds(ts).setZone(resolveZone(zone))
+
+// ✗ wrong — synthetic zones will produce incorrect results
+DateTime.fromSeconds(ts).setZone(zone)
+```
+
+Do **not** call `resolveZone` when storing, comparing, or displaying zone identifiers — those operations should use the synthetic name so the UI label stays correct.
+
 ## TimezoneSelect implementation notes
 
 - `.tz-panels-outer` uses `overflow: clip` (not `hidden`) — `overflow: hidden` creates a scroll container that `scrollIntoView` silently shifts sideways

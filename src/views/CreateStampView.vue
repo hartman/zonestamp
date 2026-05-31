@@ -225,7 +225,7 @@ import { VueDatePicker } from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import AppLayout from '../components/AppLayout.vue'
 import TimezoneSelect from '../components/TimezoneSelect.vue'
-import { useTimezone } from '../composables/useTimezone'
+import { useTimezone, resolveZone } from '../composables/useTimezone'
 import { useMobileDetection } from '../composables/useMobileDetection'
 import { useTimeFormat } from '../composables/useTimeFormat'
 
@@ -234,7 +234,7 @@ const { t } = useI18n()
 const { detectedZone } = useTimezone()
 const { formatTime, formatDate } = useTimeFormat()
 const zone = ref(detectedZone.value)
-const dt = ref(DateTime.now().startOf('minute').setZone(zone.value))
+const dt = ref(DateTime.now().startOf('minute').setZone(resolveZone(zone.value)))
 const stampVisible = ref(false)
 const stampAreaRef = ref<HTMLElement | null>(null)
 const copied = ref(false)
@@ -262,8 +262,8 @@ onMounted(() => {
 })
 
 watch(zone, (newZone) => {
-  dt.value = dt.value.setZone(newZone, { keepLocalTime: true })
-  endDt.value = endDt.value.setZone(newZone, { keepLocalTime: true })
+  dt.value = dt.value.setZone(resolveZone(newZone), { keepLocalTime: true })
+  endDt.value = endDt.value.setZone(resolveZone(newZone), { keepLocalTime: true })
 })
 
 watch(includeEndTime, (enabled) => {
