@@ -11,7 +11,7 @@
             class="picker-trigger"
             :aria-label="t('create.eventTime')"
             :value="nativeTimeValue"
-            @change="onNativeTimeChange($event, dt)"
+            @change="onNativeTimeChange($event)"
           />
           <span class="create-at">{{ t('create.on') }}</span>
           <input
@@ -19,7 +19,7 @@
             class="picker-trigger"
             :aria-label="t('create.eventDate')"
             :value="nativeDateValue"
-            @change="onNativeDateChange($event, dt)"
+            @change="onNativeDateChange($event)"
           />
         </template>
         <template v-else>
@@ -111,7 +111,7 @@
               class="picker-trigger"
               :aria-label="t('create.endTime')"
               :value="nativeEndTimeValue"
-              @change="onNativeTimeChange($event, endDt)"
+              @change="onNativeTimeChange($event, true)"
             />
             <span class="create-at">{{ t('create.on') }}</span>
             <input
@@ -119,7 +119,7 @@
               class="picker-trigger"
               :aria-label="t('create.endDate')"
               :value="nativeEndDateValue"
-              @change="onNativeDateChange($event, endDt)"
+              @change="onNativeDateChange($event, true)"
             />
           </template>
           <template v-else>
@@ -320,20 +320,26 @@ const nativeTimeValue = computed(() => dt.value.toFormat('HH:mm'))
 const nativeEndDateValue = computed(() => endDt.value.toFormat('yyyy-MM-dd'))
 const nativeEndTimeValue = computed(() => endDt.value.toFormat('HH:mm'))
 
-type DateRef = typeof dt | typeof endDt
-
-function onNativeDateChange(e: Event, target: DateRef) {
+function onNativeDateChange(e: Event, isEnd = false) {
   const val = (e.target as HTMLInputElement).value
   if (!val) return
   const [year, month, day] = val.split('-').map(Number)
-  target.value = target.value.set({ year, month, day })
+  if (isEnd) {
+    endDt.value = endDt.value.set({ year, month, day })
+  } else {
+    dt.value = dt.value.set({ year, month, day })
+  }
 }
 
-function onNativeTimeChange(e: Event, target: DateRef) {
+function onNativeTimeChange(e: Event, isEnd = false) {
   const val = (e.target as HTMLInputElement).value
   if (!val) return
   const [hour, minute] = val.split(':').map(Number)
-  target.value = target.value.set({ hour, minute })
+  if (isEnd) {
+    endDt.value = endDt.value.set({ hour, minute })
+  } else {
+    dt.value = dt.value.set({ hour, minute })
+  }
 }
 
 // ── Display ────────────────────────────────────────────────────────────────────
