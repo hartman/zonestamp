@@ -126,6 +126,7 @@ import { useTimezone, zoneTriggerLabel, resolveZone } from '../composables/useTi
 import { useTimeFormat } from '../composables/useTimeFormat'
 import { useCalendarLinks } from '../composables/useCalendarLinks'
 import { useMobileDetection } from '../composables/useMobileDetection'
+import { decompressZdl } from '../utils/urlCompression'
 
 const { t } = useI18n()
 
@@ -140,11 +141,22 @@ const ts = computed(() => parseInt(props.timestamp, 10))
 const dt = computed(() => DateTime.fromSeconds(ts.value).setZone(resolveZone(displayZone.value)))
 
 // ── Calendar data from query params ───────────────────────────────────────────
-const calendarName = computed(() => (route.query.name as string) ?? '')
-const calDescription = computed(() => (route.query.description as string) ?? '')
-const calLocation = computed(() => (route.query.location as string) ?? '')
+const eventParams = computed(() => {
+  const zdl = route.query.zdl as string | undefined
+  if (zdl) return decompressZdl(zdl)
+  return {
+    name: (route.query.name as string) ?? undefined,
+    description: (route.query.description as string) ?? undefined,
+    location: (route.query.location as string) ?? undefined,
+    url: (route.query.url as string) ?? undefined,
+  }
+})
+
+const calendarName = computed(() => eventParams.value.name ?? '')
+const calDescription = computed(() => eventParams.value.description ?? '')
+const calLocation = computed(() => eventParams.value.location ?? '')
 const calUrl = computed(() => {
-  const raw = (route.query.url as string) ?? ''
+  const raw = eventParams.value.url ?? ''
   return raw.startsWith('https://') ? raw : ''
 })
 const calEndTs = computed<number | null>(() => {

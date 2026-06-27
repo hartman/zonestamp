@@ -228,6 +228,7 @@ import TimezoneSelect from '../components/TimezoneSelect.vue'
 import { useTimezone, resolveZone } from '../composables/useTimezone'
 import { useMobileDetection } from '../composables/useMobileDetection'
 import { useTimeFormat } from '../composables/useTimeFormat'
+import { buildQueryString } from '../utils/urlCompression'
 
 const { t } = useI18n()
 
@@ -359,17 +360,17 @@ const stampUrl = computed(() => {
     ? `${basePath}/${endDt.value.toUnixInteger()}`
     : basePath
 
-  const params = new URLSearchParams()
-  if (optionsExpanded.value) {
-    const trimmedUrl = eventUrl.value.trim()
-    if (trimmedUrl.startsWith('https://')) params.set('url', trimmedUrl)
-    if (eventName.value.trim()) params.set('name', eventName.value.trim())
-    if (eventDescription.value.trim()) params.set('description', eventDescription.value.trim())
-    if (eventLocation.value.trim()) params.set('location', eventLocation.value.trim())
-  }
+  if (!optionsExpanded.value) return path
 
-  const qs = params.toString()
-  return qs ? `${path}?${qs}` : path
+  const trimmedUrl = eventUrl.value.trim()
+  const qs = buildQueryString({
+    url: trimmedUrl.startsWith('https://') ? trimmedUrl : undefined,
+    name: eventName.value.trim() || undefined,
+    description: eventDescription.value.trim() || undefined,
+    location: eventLocation.value.trim() || undefined,
+  })
+
+  return qs ? `${path}${qs}` : path
 })
 const canShare = typeof navigator.share === 'function'
 
