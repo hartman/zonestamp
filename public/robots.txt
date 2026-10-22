@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /$
+Allow: /toolinfo.json
+Allow: /favicon.ico
+Disallow: /

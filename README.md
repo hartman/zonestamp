@@ -58,6 +58,10 @@ For a Toolforge-targeted build (uses `tools-static.wmflabs.org/fontcdn` instead 
 npm run build -- --mode toolforge
 ```
 
+### Deployment
+
+Deployed on Toolforge via the Build Service (`heroku/nodejs` buildpack); see [`DEPLOY.md`](DEPLOY.md). Locally: `npm run serve:prod` builds and serves `dist/` through `server.js` on port 8000.
+
 ### Running tests
 
 Unit tests live in `src/composables/__tests__/` and `src/views/__tests__/`. E2E specs are in `e2e/`. After any significant change, run both suites before considering work done.

@@ -79,4 +79,4 @@ npx playwright test e2e/foo.spec.ts # single spec
 
 ## Deployment
 
-Toolforge at `https://zonestamp.toolforge.org`. `zonestamp.com` redirects there. The webservice must rewrite all paths to `index.html` for Vue Router history mode. Deployment config not yet wired to the new build output — see `docs/technical-design.md` § Deployment.
+Toolforge at `https://zonestamp.toolforge.org`. `zonestamp.com` redirects there. Deployed via the Toolforge Build Service (Node buildpack): `Procfile` runs `server.js`, which serves `dist/` and falls back to `index.html` for Vue Router history mode. Built with `npm run heroku-build` (toolforge mode). Test locally with `npm run serve:prod` or `pack build`. Deploy/rollback steps: `DEPLOY.md`; details: `docs/technical-design.md` § Deployment.

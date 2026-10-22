@@ -131,9 +131,13 @@ Scoped CSS does not reach teleported elements.
 ## Deployment: Toolforge
 
 - Production URL: `https://zonestamp.toolforge.org` (`zonestamp.com` redirects here)
-- Deployment repo: `/Users/hartman/Development/zonestamp-toolforge` (Ansible-based)
-- The Toolforge webservice must rewrite all paths to `index.html` for Vue Router history mode
-- Toolforge build: `npm run build -- --mode toolforge` (uses `tools-static.wmflabs.org/fontcdn` instead of Google Fonts via `.env.toolforge`)
+- Deployed with the Toolforge Build Service (`heroku/nodejs` buildpack) from the public GitHub repo, `main` branch or a `deploy-*` tag. Commands in `DEPLOY.md`
+- The buildpack runs `npm ci` and `npm run heroku-build` (`vue-tsc -b && vite build --mode toolforge`, which applies `.env.toolforge`: `tools-static.wmflabs.org/fontcdn` instead of Google Fonts)
+- `Procfile` starts `server.js`: a dependency-free Node static server. It loads `dist/` into memory at startup and serves only exact path matches, so nothing outside `dist/` is reachable. Any other path gets `index.html` with status 200, for Vue Router history mode
+- `server.js` also provides gzip, ETag/304, immutable caching for `/assets/*`, and `/healthz` (the webservice health check)
+- `robots.txt` and `toolinfo.json` (read by Toolhub) live in `public/`
+- Webservice settings are in `service.template` (`type: buildservice`, `mount: none`)
+- Node version pinned via `engines.node` (22.x). Do not set `NODE_ENV=production` at build time: devDependencies (vite, vue-tsc) are needed for the build
 
 ### Environment variables
 
@@ -141,5 +145,3 @@ Scoped CSS does not reach teleported elements.
 |---|---|---|---|
 | `VITE_FONT_CDN_HOST` | `fonts.googleapis.com` | `tools-static.wmflabs.org/fontcdn` | Font CDN host for Lobster + Quicksand |
 | `VITE_CANONICAL_URL` | `http://localhost:5173` | `https://zonestamp.toolforge.org` | Base URL for `<link rel="canonical">` and `og:url` |
-
-**Status**: deployment configuration not yet wired to the new build output. Requires inspecting the Toolforge deployment repo, updating the dist path, and verifying the SPA rewrite rule.

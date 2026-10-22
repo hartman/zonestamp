@@ -1,0 +1,11 @@
+[
+    {
+      "name" : "zonestamp",
+      "title" : "Zonestamp",
+      "description" : "A timezone converter for online events. Wikimedia version of https://zonestamp.com by Raquel M. Smith.",
+      "url" : "https://zonestamp.toolforge.org/",
+      "keywords" : "timezones,timezone,clock,date,share",
+      "author" : "JeanFred, TheDJ, Tisza Gergő, Raquel Smith",
+      "repository" : "https://github.com/hartman/zonestamp"
+    }
+]

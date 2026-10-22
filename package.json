@@ -8,13 +8,19 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/hartman/zonestamp.git",
-    "branch": "zonestamp-ng"
+    "branch": "main"
   },
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "heroku-build": "vue-tsc -b && vite build --mode toolforge",
+    "start": "node server.js",
+    "serve:prod": "npm run heroku-build && node server.js",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
